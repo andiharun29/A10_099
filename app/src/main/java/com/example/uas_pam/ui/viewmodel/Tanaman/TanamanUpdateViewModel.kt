@@ -30,5 +30,20 @@ class TanamanUpdateViewModel (
         }
     }
 
+    suspend fun updateTnmn() {
+        val tanamanCurrentEvent = tanamanUpdateUiState.inserttanamanUiEvent
 
+        try {
+            tanamanRepository.updatetanaman(_idtanaman.toInt(), tanamanCurrentEvent.totnmn())
+
+            tanamanUpdateUiState = tanamanUpdateUiState.copy(
+                snakbarMessage = "Update berhasil",
+                inserttanamanUiEvent = InserttanamanUiEvent()
+            )
+            true
+        } catch (e: Exception){
+            e.printStackTrace()
+            false
+        }
+    }
 }
