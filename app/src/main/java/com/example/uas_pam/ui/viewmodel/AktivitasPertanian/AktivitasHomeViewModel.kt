@@ -40,5 +40,16 @@ class AktivitasHomeViewModel(private val aktiv: AktivitasPertanianRepository): V
             }
         }
     }
-
+    fun deleteaktiv(id_aktivitas: Int){
+        viewModelScope.launch{
+            try {
+                aktiv.deleteaktivitaspertanian(id_aktivitas)
+                getaktiv()
+            }catch (e: IOException){
+                _aktivitasUIState.value = aktivitasHomeUiState.Error
+            }catch (e: HttpException){
+                _aktivitasUIState.value = aktivitasHomeUiState.Error
+            }
+        }
+    }
 }
