@@ -12,6 +12,18 @@ import kotlinx.coroutines.launch
 
 
 
+data class InsertpekerjaUiState(
+    val insertpekerjaUiEvent: InsertpekerjaUiEvent = InsertpekerjaUiEvent(),
+    val snakbarMessage: String? = null
+)
+
+data class InsertpekerjaUiEvent(
+    val id_pekerja: String = "",
+    val nama_pekerja: String = "",
+    val jabatan: String = "",
+    val kontak_pekerja: String = ""
+)
+
 fun InsertpekerjaUiEvent.topkrj(): Pekerja = Pekerja(
     id_pekerja = id_pekerja.toIntOrNull() ?: 0,
     nama_pekerja = nama_pekerja,
