@@ -118,6 +118,63 @@ fun PengelolaHalaman(
         }
 
 
+        //pekerja
+        composable(
+            route = DestinasiHomePekerja.route
+        ){
+            HomeScreenPekerja(
+                navigateToItemEntry = { navController.navigate(DestinasiEntryPekerja.route) },
+                navigateBack = { navController.popBackStack() },
+                onDetailClick = { id_pekerja ->
+                    navController.navigate("${DestinasiDetailPekerja.route}/$id_pekerja")
+                },
+                onEditClick = { id_pekerja ->
+                    navController.navigate("${DestinasiUpdatePekerja.route}/$id_pekerja")
+                }
+            )
+        }
+        composable(
+            route = DestinasiDetailPekerja.routeWithArgs,
+            arguments = listOf(navArgument(DestinasiDetailPekerja.id_pekerja) { type = NavType.StringType })
+        ) { backStackEntry ->
+            val idPekerja = backStackEntry.arguments?.getString(DestinasiDetailPekerja.id_pekerja)
+            if (idPekerja != null) {
+                DetailScreenPekerja(
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+        }
+        composable(
+            route = DestinasiEntryPekerja.route
+        ) {
+            EntryScreenPekerja(
+                navigateBack = { navController.navigate(DestinasiHomePekerja.route){
+                    popUpTo(DestinasiHomePekerja.route){
+                        inclusive = true
+                    }
+                }
+                },
+                modifier = modifier
+            )
+        }
+        composable(
+            DestinasiUpdatePekerja.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdatePekerja.id_pekerja) {
+                    type = NavType.IntType
+                }
+            )
+        ){
+            UpdatePekerjaView(
+                onBack = { navController.popBackStack() },
+                onNavigate = { navController.navigate(DestinasiHomePekerja.route) {
+                    popUpTo(DestinasiHomePekerja.route) {
+                        inclusive = true }
+                } },
+                modifier = modifier
+            )
+        }
+
 
     }
 }
