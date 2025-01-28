@@ -67,7 +67,60 @@ import com.example.uas_pam.ui.viewmodel.Tanaman.tanamanHomeUiState
 import kotlinx.coroutines.flow.StateFlow
 
 
+object DestinasiHomePanen : DestinasiNavigasi {
+    override val route = "homepanen"
+    override val titleRes = "Home Catatan Panen"
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreenPanen(
+    navigateToItemEntry: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit = {},
+    navigateBack: () -> Unit = {},
+    onEditClick: (String) -> Unit,
+    viewModel: PanenHomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiHomePanen.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                onRefresh = {
+                    viewModel.getpnn()  // This will refresh the data when the user pulls to refresh.
+                },
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Tanaman")
+            }
+        },
+    ) { innerPadding ->
+        PanenHomeStatus(
+            panenHomeUiState = viewModel.panenUiState,
+            retryAction = { viewModel.getpnn() },
+            modifier = Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick,
+            onDeleteClick = {
+                it.id_panen?.let { it1 -> viewModel.deletepnn(it1) }
+                viewModel.getpnn()
+            },
+            onEditClick = onEditClick
+
+        )
+    }
+}
 
 @Composable
 fun PanenHomeStatus(
