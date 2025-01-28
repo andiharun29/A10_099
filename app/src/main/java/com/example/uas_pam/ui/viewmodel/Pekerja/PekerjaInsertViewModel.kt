@@ -10,7 +10,24 @@ import com.example.uas_pam.data.model.Pekerja
 import kotlinx.coroutines.launch
 
 
+class InsertpekerjaViewModel(private val pkrj: PekerjaRepository): ViewModel() {
+    var pekerjauiState by mutableStateOf(InsertpekerjaUiState())
+        private set
 
+    fun updateInsertpekerjaUiState(insertpekerjaUiEvent: InsertpekerjaUiEvent) {
+        pekerjauiState = InsertpekerjaUiState(insertpekerjaUiEvent = insertpekerjaUiEvent)
+    }
+
+    fun insertpkrj() {
+        viewModelScope.launch {
+            try {
+                pkrj.insertpekerja(pekerjauiState.insertpekerjaUiEvent.topkrj())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
 
 data class InsertpekerjaUiState(
     val insertpekerjaUiEvent: InsertpekerjaUiEvent = InsertpekerjaUiEvent(),
