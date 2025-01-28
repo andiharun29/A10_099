@@ -64,6 +64,60 @@ import com.example.uas_pam.ui.viewmodel.Pekerja.pekerjaHomeUiState
 import kotlinx.coroutines.flow.StateFlow
 
 
+object DestinasiHomePekerja : DestinasiNavigasi {
+    override val route = "homepkrj"
+    override val titleRes = "Home Pekerja"
+}
+
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreenPekerja(
+    navigateToItemEntry: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit = {},
+    navigateBack: () -> Unit = {},
+    onEditClick: (String) -> Unit,
+    viewModel: PekerjaHomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiHomePekerja.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                onRefresh = {
+                    viewModel.getpkrj()  // This will refresh the data when the user pulls to refresh.
+                },
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Pekerja")
+            }
+        },
+    ) { innerPadding ->
+        PekerjaHomeStatus(
+            pekerjaHomeUiState = viewModel.pekerjaUIState,
+            retryAction = { viewModel.getpkrj() },
+            modifier = Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick,
+            onDeleteClick = {
+                it.id_pekerja?.let { it1 -> viewModel.deletepkrj(it1) }
+                viewModel.getpkrj()
+            },
+            onEditClick = onEditClick
+        )
+    }
+}
 
 @Composable
 fun PekerjaHomeStatus(
