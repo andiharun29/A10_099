@@ -88,4 +88,42 @@ fun EntryScreenTanaman(
     }
 }
 
+@Composable
+fun EntryBody(
+    inserttanamanUiState: InserttanamanUiState,
+    onTanamanValueChange: (InserttanamanUiEvent) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier.padding(16.dp)
+    ) {
+        FormInput(
+            inserttanamanUiEvent = inserttanamanUiState.inserttanamanUiEvent,
+            onValueChange = onTanamanValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            shape = MaterialTheme.shapes.medium,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp)
+                .background(Brush.horizontalGradient(listOf(Color(0xFF0984E3), Color(0xFF6C5CE7)))),
+            colors = ButtonDefaults.buttonColors(Color.Transparent)
+        ) {
+            Text(
+                text = "Simpan",
+                style = TextStyle(
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+            )
+        }
+    }
+}
+
+
 
