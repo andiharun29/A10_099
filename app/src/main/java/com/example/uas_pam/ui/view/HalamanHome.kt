@@ -61,7 +61,7 @@ fun HalamanHome(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color(0xFFF5F5F5)) // Warna latar belakang abu lembut
+            .background(color = Color(0xFF766767)) // Warna latar belakang abu lembut
     ) {
         HeaderSection()
         BodySection(
@@ -136,20 +136,20 @@ fun BodySection(
         }
         item {
             AnimatedManageBox(
-                title = "Catatan Panen",
-                description = "Lihat aktivitas panen Anda di sini.",
-                backgroundColor = Color(0xFFF2C94C),
-                iconResource = R.drawable.gardeningpan,
-                onClick = onCatatanPanen
-            )
-        }
-        item {
-            AnimatedManageBox(
                 title = "Aktivitas Pertanian",
                 description = "Pantau aktivitas pertanian Anda.",
                 backgroundColor = Color(0xFFBB6BD9),
                 iconResource = R.drawable.gardenings,
                 onClick = onAktivitasPertanian
+            )
+        }
+        item {
+            AnimatedManageBox(
+                title = "Catatan Panen",
+                description = "Lihat aktivitas panen Anda di sini.",
+                backgroundColor = Color(0xFFF2C94C),
+                iconResource = R.drawable.gardeningpan,
+                onClick = onCatatanPanen
             )
         }
     }
