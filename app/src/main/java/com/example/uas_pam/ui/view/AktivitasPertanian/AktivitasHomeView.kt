@@ -1,5 +1,6 @@
 package com.example.uas_pam.ui.view.AktivitasPertanian
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -62,7 +63,98 @@ import com.example.uas_pam.ui.viewmodel.AktivitasPertanian.AktivitasHomeViewMode
 import com.example.uas_pam.ui.viewmodel.AktivitasPertanian.aktivitasHomeUiState
 import kotlinx.coroutines.flow.StateFlow
 
+object DestinasiHomeAktivitas : DestinasiNavigasi {
+    override val route = "homeAktiv"
+    override val titleRes = "Home Aktivitas Pertanian"
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreenAktivitas(
+    navigateToItemEntry: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit = {},
+    navigateBack: () -> Unit = {},
+    onEditClick: (String) -> Unit,
+    viewModel: AktivitasHomeViewModel = viewModel(factory = PenyediaViewModel.Factory)
+) {
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiHomeAktivitas.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                onRefresh = {
+                    viewModel.getaktiv()  // This will refresh the data when the user pulls to refresh.
+                },
+                navigateUp = navigateBack
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToItemEntry,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Icon(imageVector = Icons.Default.Add, contentDescription = "Add Tanaman")
+            }
+        },
+    ) { innerPadding ->
+        AktivitasHomeStatus(
+            aktivitasHomeUiState = viewModel.aktivitasUIState,
+            retryAction = { viewModel.getaktiv() },
+            modifier = Modifier.padding(innerPadding),
+            onDetailClick = onDetailClick,
+            onDeleteClick = {
+                it.id_aktivitas?.let { it1 -> viewModel.deleteaktiv(it1) }
+                viewModel.getaktiv()
+            },
+            onEditClick = onEditClick
+
+        )
+    }
+}
+
+
+@Composable
+fun AktivitasHomeStatus(
+    aktivitasHomeUiState: StateFlow<aktivitasHomeUiState>,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Aktivitas_pertanian) -> Unit = {},
+    onDetailClick: (String) -> Unit = {},
+    onEditClick: (String) -> Unit = {}
+){
+    when (val state = aktivitasHomeUiState.collectAsState().value){
+        is aktivitasHomeUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is aktivitasHomeUiState.Success ->
+            if(state.aktivitas.isEmpty()){
+                return Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                    Text(text = "Tidak ada data Aktivitas")
+                }
+            }else {
+                aktivLayout (
+                    aktivitas = state.aktivitas, modifier = modifier.fillMaxWidth(),
+                    onDetailClick =
+                    onDetailClick,
+                    onDeleteClick = {
+                        onDeleteClick(it)
+                    },
+                    onEditClick =
+                    onEditClick
+
+                )
+            }
+        is aktivitasHomeUiState.Error ->OnError(
+            retryAction,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
 
 @Composable
 fun OnLoading(modifier: Modifier = Modifier){
