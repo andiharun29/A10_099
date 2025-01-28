@@ -50,6 +50,33 @@ import kotlinx.coroutines.launch
 
 
 
+
+@Composable
+fun EntryBody(
+    insertpanenUiState: InsertpanenUiState,
+    onPanenValueChange: (InsertpanenUiEvent) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier.padding(12.dp)
+    ) {
+        FormInput(
+            insertpanenUiEvent = insertpanenUiState.insertpanenUiEvent,
+            onValueChange = onPanenValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Simpan")
+        }
+    }
+}
+
 @Composable
 fun FormInput(
     insertpanenUiEvent: InsertpanenUiEvent,
