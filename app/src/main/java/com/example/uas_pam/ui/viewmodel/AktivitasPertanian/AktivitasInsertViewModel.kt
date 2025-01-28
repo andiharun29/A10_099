@@ -17,6 +17,18 @@ import kotlinx.coroutines.launch
 
 
 
+fun InsertaktivitasUiEvent.toaktiv(): Aktivitas_pertanian = Aktivitas_pertanian(
+    id_aktivitas = id_aktivitas,
+    id_tanaman = id_tanaman,
+    id_pekerja = id_pekerja,
+    tanggal_aktivitas = tanggal_aktivitas,
+    deskripsi_aktivitas = deskripsi_aktivitas
+)
+
+fun Aktivitas_pertanian.toUiStateaktivitas(): InsertaktivitasUiState = InsertaktivitasUiState(
+    insertaktivitasUiEvent = toInsertaktivitasUiEvent()
+)
+
 fun Aktivitas_pertanian.toInsertaktivitasUiEvent(): InsertaktivitasUiEvent = InsertaktivitasUiEvent(
     id_aktivitas = id_aktivitas,
     id_tanaman = id_tanaman,
