@@ -48,7 +48,47 @@ import com.example.uas_pam.ui.viewmodel.CatatanPanen.PanenInsertViewModel
 import kotlinx.coroutines.launch
 
 
+object DestinasiEntryPanen : DestinasiNavigasi {
+    override val route = "itempanen"
+    override val titleRes = "Masukkan Data Catatan Panen"
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EntryScreenPanen(
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: PanenInsertViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val coroutineScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiEntryTanaman.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ){innerPadding ->
+        EntryBody(
+            insertpanenUiState = viewModel.panenuiState,
+            onPanenValueChange = viewModel::updateInsertpanenUiState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.insertPnn()
+                    navigateBack()
+                }
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+        )
+    }
+}
 
 
 @Composable
