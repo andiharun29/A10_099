@@ -62,7 +62,14 @@ object PenyediaViewModel{
             )
         }
 
-
+        initializer { AktivitasHomeViewModel(aplikasipertanian().container.aktivitaspertanianRepository) }
+        initializer { InsertAktivitasViewModel(aplikasipertanian().container.aktivitaspertanianRepository) }
+        initializer { AktivitasDetailViewModel(
+            createSavedStateHandle(),
+            aplikasipertanian().container.aktivitaspertanianRepository) }
+        initializer { AktivitasUpdateViewModel(
+            createSavedStateHandle()
+            ,aplikasipertanian().container.aktivitaspertanianRepository) }
     }
 }
 
