@@ -15,7 +15,24 @@ import com.example.uas_pam.ui.viewmodel.Tanaman.toInserttanamanUiEvent
 import com.example.uas_pam.ui.viewmodel.Tanaman.totnmn
 import kotlinx.coroutines.launch
 
+class InsertAktivitasViewModel(private val aktiv: AktivitasPertanianRepository): ViewModel() {
+    var aktivitasuiState by mutableStateOf(InsertaktivitasUiState())
+        private set
 
+    fun updateInsertaktivitasUiState(insertaktivitasUiEvent: InsertaktivitasUiEvent) {
+        aktivitasuiState = InsertaktivitasUiState(insertaktivitasUiEvent = insertaktivitasUiEvent)
+    }
+
+    fun insertTnmn() {
+        viewModelScope.launch {
+            try {
+                aktiv.insertaktivitaspertanian(aktivitasuiState.insertaktivitasUiEvent.toaktiv())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
 
 data class InsertaktivitasUiState(
     val insertaktivitasUiEvent: InsertaktivitasUiEvent = InsertaktivitasUiEvent(),
