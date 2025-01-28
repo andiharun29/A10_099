@@ -42,5 +42,16 @@ class PekerjaHomeViewModel(private val pkrj: PekerjaRepository): ViewModel(){
             }
         }
     }
-
+    fun deletepkrj(id_pekerja: Int){
+        viewModelScope.launch{
+            try {
+                pkrj.deletepekerja(id_pekerja)
+                getpkrj()
+            }catch (e: IOException){
+                _pekerjaUIState.value = pekerjaHomeUiState.Error
+            }catch (e: HttpException){
+                _pekerjaUIState.value = pekerjaHomeUiState.Error
+            }
+        }
+    }
 }
