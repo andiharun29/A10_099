@@ -32,5 +32,17 @@ class PanenDetailViewModel (
         getcatatanpanenById()
     }
 
-
+    fun getcatatanpanenById(){
+        viewModelScope.launch {
+            panenDetailState = try {
+                val panen = catatanPanenRepository.getcatatanpanenbyid(idpanen.toInt())
+                panenDetailUiState.Success(panen)
+            }catch (e: IOException){
+                panenDetailUiState.Error
+            }catch (e: HttpException){
+                e.printStackTrace()
+                panenDetailUiState.Error
+            }
+        }
+    }
 }
