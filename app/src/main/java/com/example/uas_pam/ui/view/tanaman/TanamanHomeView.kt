@@ -181,3 +181,31 @@ fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun tnmnLayout(
+    tanaman: List<Tanaman>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit,
+    onDeleteClick: (Tanaman) -> Unit = {},
+    onEditClick: (String) -> Unit
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(tanaman) { tanaman ->
+            tnmnCard(
+                tanaman = tanaman,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp) // Tambahkan padding horizontal
+                    .clickable { onDetailClick(tanaman.id_tanaman.toString()) },
+                onDeleteClick = { onDeleteClick(tanaman) },
+                onEditClick = { onEditClick(tanaman.id_tanaman.toString()) },
+                onDetailClick = { onDetailClick(tanaman.id_tanaman.toString()) }
+            )
+        }
+    }
+}
+
