@@ -12,6 +12,18 @@ import kotlinx.coroutines.launch
 
 
 
+fun InsertpekerjaUiEvent.topkrj(): Pekerja = Pekerja(
+    id_pekerja = id_pekerja.toIntOrNull() ?: 0,
+    nama_pekerja = nama_pekerja,
+    jabatan = jabatan,
+    kontak_pekerja = kontak_pekerja
+)
+
+
+fun Pekerja.toUiStatepekerja(): InsertpekerjaUiState = InsertpekerjaUiState(
+    insertpekerjaUiEvent = toInsertpekerjaUiEvent()
+)
+
 fun Pekerja.toInsertpekerjaUiEvent(): InsertpekerjaUiEvent = InsertpekerjaUiEvent(
     id_pekerja = id_pekerja.toString(),
     nama_pekerja = nama_pekerja,
