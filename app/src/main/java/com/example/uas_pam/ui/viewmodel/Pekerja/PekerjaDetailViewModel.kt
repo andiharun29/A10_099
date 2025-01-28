@@ -36,5 +36,17 @@ class PekerjaDetailViewModel (
         getPekerjaById()
     }
 
-
+    fun getPekerjaById(){
+        viewModelScope.launch {
+            pekerjaDetailState = try {
+                val pekerja = pekerjaRepository.getpekerjabyid(idpekerja.toInt())
+                PekerjaDetailUiState.Success(pekerja)
+            }catch (e: IOException){
+                PekerjaDetailUiState.Error
+            }catch (e: HttpException){
+                e.printStackTrace()
+                PekerjaDetailUiState.Error
+            }
+        }
+    }
 }
