@@ -4,18 +4,26 @@ import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Create
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -83,7 +91,7 @@ fun DetailScreenTanaman(
                     is TanamanDetailUiState.Error -> {
                         Text(
                             text = (viewModel.tanamanDetailState as TanamanDetailUiState.Error).toString(),
-                            style = MaterialTheme.typography.bodyMedium.copy(color = Color.Red),
+                            style = MaterialTheme.typography.bodyLarge.copy(color = Color.Red),
                             modifier = Modifier.align(Alignment.Center)
                         )
                     }
@@ -94,66 +102,99 @@ fun DetailScreenTanaman(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(16.dp),
-                            verticalArrangement = Arrangement.spacedBy(20.dp)
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
-                            // Card utama dengan sedikit bayangan
                             Card(
                                 modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(24.dp),
-                                elevation = CardDefaults.cardElevation(8.dp)
+                                elevation = CardDefaults.cardElevation(8.dp),
+                                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFF3E0))
                             ) {
                                 Column(
-                                    modifier = Modifier.padding(24.dp),
-                                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                                    modifier = Modifier.padding(16.dp),
+                                    verticalArrangement = Arrangement.spacedBy(8.dp)
                                 ) {
-                                    Text(
-                                        text = "ID Tanaman: ${tanaman.id_tanaman}",
-                                        style = MaterialTheme.typography.bodyLarge.copy(
-                                            fontWeight = FontWeight.Bold,
-                                            color = Color(0xFF757575) // Hijau yang lebih gelap
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        Text(
+                                            text = "Detail Tanaman",
+                                            style = MaterialTheme.typography.titleLarge,
+                                            color = MaterialTheme.colorScheme.primary
                                         )
-                                    )
-                                    Text(
-                                        text = "Nama Tanaman: ${tanaman.nama_tanaman}",
-                                        style = MaterialTheme.typography.bodyLarge.copy(
-                                            fontWeight = FontWeight.Bold,
-                                            color = Color(0xFF757575) // Hijau utama
+                                        Icon(
+                                            imageVector = Icons.Default.Info,
+                                            contentDescription = "Tanaman Icon",
+                                            tint = MaterialTheme.colorScheme.primary
                                         )
-                                    )
-                                    Text(
-                                        text = "Periode Tanam: ${tanaman.periode_tanam}",
-                                        style = MaterialTheme.typography.bodyLarge.copy(
-                                            fontWeight = FontWeight.Bold,
-                                            color = Color(0xFF757575) // Warna abu-abu lembut
-                                        )
-                                    )
-                                    Text(
-                                        text = "Deskripsi Tanaman: ${tanaman.deskripsi_tanaman}",
-                                        style = MaterialTheme.typography.bodyLarge.copy(
-                                            fontWeight = FontWeight.Bold,
-                                            color = Color(0xFF616161)
-                                        ),
-                                        modifier = Modifier.padding(top = 8.dp)
-                                    )
-                                }
-                            }
+                                    }
 
-                            // Tombol Kembali dengan desain yang lebih jelas
-                            Button(
-                                onClick = { onBackClick() },
-                                shape = RoundedCornerShape(12.dp),
-                                modifier = Modifier.fillMaxWidth(),
-                                colors = ButtonDefaults.buttonColors(containerColor = Color(
-                                    0xFF2D91C2
-                                )
-                                )
-                            ) {
-                                Text(text = "Kembali", style = MaterialTheme.typography.bodyLarge.copy(color = Color.White))
+                                    Divider(color = MaterialTheme.colorScheme.primary, thickness = 1.dp)
+
+                                    Column(
+                                        modifier = Modifier.padding(vertical = 8.dp),
+                                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                                    ) {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Icon(
+                                                imageVector = Icons.Default.Info,
+                                                contentDescription = "ID Tanaman",
+                                                tint = MaterialTheme.colorScheme.secondary
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = "ID Tanaman: ${tanaman.id_tanaman}",
+                                                style = MaterialTheme.typography.bodyLarge
+                                            )
+                                        }
+
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Icon(
+                                                imageVector = Icons.Default.Create,
+                                                contentDescription = "Nama Tanaman",
+                                                tint = MaterialTheme.colorScheme.secondary
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = "Nama Tanaman: ${tanaman.nama_tanaman}",
+                                                style = MaterialTheme.typography.bodyLarge
+                                            )
+                                        }
+
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Icon(
+                                                imageVector = Icons.Default.DateRange,
+                                                contentDescription = "Periode Tanam",
+                                                tint = MaterialTheme.colorScheme.secondary
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = "Periode Tanam: ${tanaman.periode_tanam}",
+                                                style = MaterialTheme.typography.bodyLarge
+                                            )
+                                        }
+
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+                                            Icon(
+                                                imageVector = Icons.Default.Email,
+                                                contentDescription = "Deskripsi Tanaman",
+                                                tint = MaterialTheme.colorScheme.secondary
+                                            )
+                                            Spacer(modifier = Modifier.width(8.dp))
+                                            Text(
+                                                text = "Deskripsi Tanaman: ${tanaman.deskripsi_tanaman}",
+                                                style = MaterialTheme.typography.bodyLarge
+                                            )
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
         }
+
     )
 }

@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Info
@@ -158,7 +159,7 @@ fun FormInput(
             onValueChange = { onValueChange(inserttanamanUiEvent.copy(id_tanaman = it)) },
             label = { Text("ID Tanaman", color = Color(0xFF616161)) },
             leadingIcon = {
-                Icon(imageVector = Icons.Default.Info, contentDescription = "ID Tanaman")
+                Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "ID Tanaman")
             },
             modifier = Modifier.fillMaxWidth(),
             textStyle = TextStyle(
@@ -210,6 +211,9 @@ fun FormInput(
             value = inserttanamanUiEvent.deskripsi_tanaman,
             onValueChange = { onValueChange(inserttanamanUiEvent.copy(deskripsi_tanaman = it)) },
             label = { Text("Deskripsi Tanaman", color = Color(0xFF616161)) },
+            leadingIcon = {
+                Icon(imageVector = Icons.Default.Info, contentDescription = "Deskripsi Tanaman")
+            },
             modifier = Modifier.fillMaxWidth(),
             textStyle = TextStyle(
                 color = Color(0xFF2D3436),
