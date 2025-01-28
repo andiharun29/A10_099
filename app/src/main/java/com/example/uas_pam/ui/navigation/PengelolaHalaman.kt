@@ -240,6 +240,70 @@ fun PengelolaHalaman(
             }
         }
 
+        //AKtivitas Pertanian
 
+        composable(
+            route = DestinasiHomeAktivitas.route
+        ){
+            HomeScreenAktivitas(
+                navigateToItemEntry = {
+                    navController.navigate(DestinasiEntryAktivitas.route)
+                },
+                navigateBack = {
+                    navController.popBackStack()
+                },
+                onDetailClick = { id_aktivitas ->
+                    navController.navigate("${DestinasiDetailAktivitas.route}/$id_aktivitas")
+                },
+                onEditClick = { id_aktivitas ->
+                    navController.navigate("${DestinasiUpdateAktivitas.route}/${id_aktivitas}")
+                }
+            )
+        }
+        composable(
+            route = DestinasiDetailAktivitas.routeWithArgs,
+            arguments = listOf(navArgument(DestinasiDetailAktivitas.id_aktivitas) { type = NavType.StringType })
+        ) { backStackEntry ->
+            val idaktivitas = backStackEntry.arguments?.getString(DestinasiDetailAktivitas.id_aktivitas)
+            if (idaktivitas != null) {
+                DetailScreenAktivitas(
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+        }
+        composable(
+            route = DestinasiEntryAktivitas.route
+        ) {
+            EntryScreenAktivitas(
+                navigateBack = { navController.navigate(DestinasiHomeAktivitas.route){
+                    popUpTo(DestinasiHomeAktivitas.route){
+                        inclusive = true
+                    }
+                }
+                }
+            )
+        }
+        composable(
+            DestinasiUpdateAktivitas.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdateAktivitas.id_aktivitas) {
+                    type = NavType.IntType
+                }
+            )
+        ){ BackStackEntry ->
+            val id_aktivitas = BackStackEntry.arguments?.getInt(DestinasiUpdateAktivitas.id_aktivitas)
+            requireNotNull(id_aktivitas)
+            id_aktivitas?.let {
+                UpdateAktivitasView(
+                    onBack = { navController.popBackStack() },
+                    onNavigate = { navController.navigate(DestinasiHomeAktivitas.route) {
+                        popUpTo(DestinasiHomeAktivitas.route) {
+                            inclusive = true }
+                    }
+                    },
+                    modifier = modifier
+                )
+            }
+        }
     }
 }
