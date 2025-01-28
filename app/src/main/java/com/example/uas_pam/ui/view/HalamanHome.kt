@@ -121,7 +121,7 @@ fun BodySection(
                 title = "Tanaman",
                 description = "Kelola Tanaman Anda di sini.",
                 backgroundColor = Color(0xFF6FCF97),
-                iconResource = R.drawable.tanaman,
+                iconResource = R.drawable.plants,
                 onClick = onTanaman
             )
         }
@@ -130,7 +130,7 @@ fun BodySection(
                 title = "Pekerja",
                 description = "Daftar atau kelola pekerja Anda.",
                 backgroundColor = Color(0xFF56CCF2),
-                iconResource = R.drawable.pekerja,
+                iconResource = R.drawable.gardeners,
                 onClick = onPekerja
             )
         }
@@ -139,7 +139,7 @@ fun BodySection(
                 title = "Catatan Panen",
                 description = "Lihat aktivitas panen Anda di sini.",
                 backgroundColor = Color(0xFFF2C94C),
-                iconResource = R.drawable.panen,
+                iconResource = R.drawable.gardeningpan,
                 onClick = onCatatanPanen
             )
         }
@@ -148,7 +148,7 @@ fun BodySection(
                 title = "Aktivitas Pertanian",
                 description = "Pantau aktivitas pertanian Anda.",
                 backgroundColor = Color(0xFFBB6BD9),
-                iconResource = R.drawable.aktivitas,
+                iconResource = R.drawable.gardenings,
                 onClick = onAktivitasPertanian
             )
         }

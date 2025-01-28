@@ -159,8 +159,8 @@ fun AktivitasHomeStatus(
 @Composable
 fun OnLoading(modifier: Modifier = Modifier){
     Image(
-        modifier = modifier.size(200.dp),
-        painter = painterResource(R.drawable.loding),
+        modifier = modifier.size(0.dp),
+        painter = painterResource(R.drawable.loadings),
         contentDescription = stringResource(R.string.loading)
     )
 }
@@ -173,7 +173,7 @@ fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.gagal_koneksi), contentDescription = ""
+            painter = painterResource(id = R.drawable.noconnections), contentDescription = ""
         )
         Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
         Button(onClick = retryAction) {
@@ -250,10 +250,9 @@ fun aktivCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = aktivitas.tanggal_aktivitas,
-                    style = MaterialTheme.typography.titleLarge.copy(
+                    text = "ID Pekerja: ${aktivitas.id_pekerja}",
+                    style = MaterialTheme.typography.bodyLarge.copy(
                         color = Color(0xFF37474F),
-                        fontWeight = FontWeight.Bold
                     ),
                 )
                 Spacer(Modifier.weight(1f))
@@ -265,6 +264,12 @@ fun aktivCard(
                     )
                 }
             }
+            Text(
+                text = "ID Tanaman: ${aktivitas.id_tanaman}",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = Color(0xFF37474F),
+                ),
+            )
             Text(
                 text = aktivitas.tanggal_aktivitas,
                 style = MaterialTheme.typography.bodyLarge.copy(color = Color.Gray),

@@ -163,7 +163,7 @@ fun PanenHomeStatus(
 fun OnLoading(modifier: Modifier = Modifier){
     Image(
         modifier = modifier.size(200.dp),
-        painter = painterResource(R.drawable.loding),
+        painter = painterResource(R.drawable.loadings),
         contentDescription = stringResource(R.string.loading)
     )
 }
@@ -176,7 +176,7 @@ fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.gagal_koneksi), contentDescription = ""
+            painter = painterResource(id = R.drawable.noconnections), contentDescription = ""
         )
         Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
         Button(onClick = retryAction) {
@@ -268,6 +268,12 @@ fun pnnCard(
                     )
                 }
             }
+            Text(
+                text = "ID Tanaman: ${catatanPanen.id_tanaman}",
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    color = Color(0xFF37474F),
+                ),
+            )
             Text(
                 text = catatanPanen.tanggal_panen,
                 style = MaterialTheme.typography.bodyLarge.copy(color = Color.Gray),
