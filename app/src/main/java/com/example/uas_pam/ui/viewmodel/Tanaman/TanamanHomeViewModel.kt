@@ -40,5 +40,16 @@ sealed class tanamanHomeUiState{
             }
         }
     }
-
+    fun deletetnmn(id_tanaman: Int){
+        viewModelScope.launch{
+            try {
+                tnmn.deletetanaman(id_tanaman)
+                gettnmn()
+            }catch (e: IOException){
+                _tanamanUIState.value = tanamanHomeUiState.Error
+            }catch (e: HttpException){
+                _tanamanUIState.value = tanamanHomeUiState.Error
+            }
+        }
+    }
 }
