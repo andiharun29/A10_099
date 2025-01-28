@@ -17,6 +17,20 @@ import kotlinx.coroutines.launch
 
 
 
+data class InsertaktivitasUiState(
+    val insertaktivitasUiEvent: InsertaktivitasUiEvent = InsertaktivitasUiEvent(),
+    val snakbarMessage: String? = null
+)
+
+data class InsertaktivitasUiEvent(
+    val id_aktivitas: Int = 0,
+    val id_tanaman: Int = 0,
+    val id_pekerja: Int = 0,
+    val tanggal_aktivitas: String = "",
+    val deskripsi_aktivitas: String = ""
+)
+
+
 fun InsertaktivitasUiEvent.toaktiv(): Aktivitas_pertanian = Aktivitas_pertanian(
     id_aktivitas = id_aktivitas,
     id_tanaman = id_tanaman,
