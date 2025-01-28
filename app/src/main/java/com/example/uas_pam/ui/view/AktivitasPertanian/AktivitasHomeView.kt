@@ -1,6 +1,5 @@
 package com.example.uas_pam.ui.view.AktivitasPertanian
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -63,6 +62,60 @@ import com.example.uas_pam.ui.viewmodel.AktivitasPertanian.AktivitasHomeViewMode
 import com.example.uas_pam.ui.viewmodel.AktivitasPertanian.aktivitasHomeUiState
 import kotlinx.coroutines.flow.StateFlow
 
+
+
+@Composable
+fun OnLoading(modifier: Modifier = Modifier){
+    Image(
+        modifier = modifier.size(200.dp),
+        painter = painterResource(R.drawable.loding),
+        contentDescription = stringResource(R.string.loading)
+    )
+}
+
+@Composable
+fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.gagal_koneksi), contentDescription = ""
+        )
+        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
+        Button(onClick = retryAction) {
+            Text(stringResource(R.string.retry))
+        }
+    }
+}
+
+@Composable
+fun aktivLayout(
+    aktivitas: List<Aktivitas_pertanian>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit,
+    onDeleteClick: (Aktivitas_pertanian) -> Unit = {},
+    onEditClick: (String) -> Unit
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(aktivitas) { aktiv ->
+            aktivCard (
+                aktivitas = aktiv,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onDetailClick(aktiv.id_aktivitas.toString()) }, // Navigasi ke detail menggunakan onDetailClick
+                onDeleteClick = { onDeleteClick(aktiv) },
+                onEditClick = { onEditClick(aktiv.id_aktivitas.toString()) },
+                onDetailClick = { onDetailClick(aktiv.id_aktivitas.toString()) }
+            )
+        }
+    }
+}
 
 @Composable
 fun aktivCard(
