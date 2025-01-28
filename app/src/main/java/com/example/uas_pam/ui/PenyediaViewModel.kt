@@ -38,6 +38,18 @@ object PenyediaViewModel{
             )
         }
 
+        initializer { PekerjaHomeViewModel(aplikasipertanian().container.pekerjaRepository) }
+        initializer { InsertpekerjaViewModel(aplikasipertanian().container.pekerjaRepository) }
+        initializer { PekerjaDetailViewModel(
+                createSavedStateHandle(),
+                aplikasipertanian().container.pekerjaRepository) }
+        initializer {
+            PekerjaUpdateViewModel(
+                createSavedStateHandle(),
+            aplikasipertanian().container.pekerjaRepository
+            )
+        }
+
 
     }
 }
