@@ -11,6 +11,13 @@ import kotlinx.coroutines.launch
 
 
 
+fun InserttanamanUiEvent.totnmn(): Tanaman = Tanaman(
+    id_tanaman = id_tanaman.toIntOrNull() ?: 0,
+    nama_tanaman = nama_tanaman,
+    periode_tanam = periode_tanam,
+    deskripsi_tanaman = deskripsi_tanaman
+)
+
 fun Tanaman.toUiStatetanaman(): InserttanamanUiState = InserttanamanUiState(
     inserttanamanUiEvent = toInserttanamanUiEvent()
 )
