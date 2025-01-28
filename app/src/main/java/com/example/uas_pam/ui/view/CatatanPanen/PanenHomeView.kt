@@ -68,6 +68,60 @@ import kotlinx.coroutines.flow.StateFlow
 
 
 
+
+@Composable
+fun OnLoading(modifier: Modifier = Modifier){
+    Image(
+        modifier = modifier.size(200.dp),
+        painter = painterResource(R.drawable.loding),
+        contentDescription = stringResource(R.string.loading)
+    )
+}
+
+@Composable
+fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.gagal_koneksi), contentDescription = ""
+        )
+        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
+        Button(onClick = retryAction) {
+            Text(stringResource(R.string.retry))
+        }
+    }
+}
+
+@Composable
+fun pnnLayout(
+    catatanPanen: List<Catatan_panen>,
+    modifier: Modifier = Modifier,
+    onDetailClick: (String) -> Unit,
+    onDeleteClick: (Catatan_panen) -> Unit = {},
+    onEditClick: (String) -> Unit
+) {
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        items(catatanPanen) { panen ->
+            pnnCard (
+                catatanPanen = panen,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { onDetailClick(panen.id_panen.toString()) }, // Navigasi ke detail menggunakan onDetailClick
+                onDeleteClick = { onDeleteClick(panen) },
+                onEditClick = { onEditClick(panen.id_panen.toString()) },
+                onDetailClick = { onDetailClick(panen.id_panen.toString()) }
+            )
+        }
+    }
+}
+
 @Composable
 fun pnnCard(
     catatanPanen: Catatan_panen,
