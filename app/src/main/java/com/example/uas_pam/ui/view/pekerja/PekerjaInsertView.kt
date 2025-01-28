@@ -45,7 +45,47 @@ import com.example.uas_pam.ui.viewmodel.Pekerja.InsertpekerjaViewModel
 import kotlinx.coroutines.launch
 
 
+object DestinasiEntryPekerja : DestinasiNavigasi {
+    override val route = "itempekerja"
+    override val titleRes = "Masukkan Data Pekerja"
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EntryScreenPekerja(
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: InsertpekerjaViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val coroutineScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiEntryPekerja.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ){innerPadding ->
+        EntryBody(
+            insertpekerjaUiState = viewModel.pekerjauiState,
+            onPekerjaValueChange = viewModel::updateInsertpekerjaUiState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.insertpkrj()
+                    navigateBack()
+                }
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+        )
+    }
+}
 
 @Composable
 fun EntryBody(
