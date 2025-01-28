@@ -11,6 +11,11 @@ import kotlinx.coroutines.launch
 
 
 
+data class InserttanamanUiState(
+    val inserttanamanUiEvent: InserttanamanUiEvent = InserttanamanUiEvent(),
+    val snakbarMessage: String? = null
+)
+
 data class InserttanamanUiEvent(
     val id_tanaman: String = "",
     val nama_tanaman: String = "",
