@@ -35,5 +35,17 @@ class AktivitasDetailViewModel (
         getaktivitaspanenbyid()
     }
 
-
+    fun getaktivitaspanenbyid(){
+        viewModelScope.launch {
+            AktivitasDetailState = try {
+                val aktivitas = aktivitasRepository.getaktivitaspertanianbyid(idaktivitas.toInt())
+                AktivitasDetailUiState.Success(aktivitas)
+            }catch (e: IOException){
+                AktivitasDetailUiState.Error
+            }catch (e: HttpException){
+                e.printStackTrace()
+                AktivitasDetailUiState.Error
+            }
+        }
+    }
 }
