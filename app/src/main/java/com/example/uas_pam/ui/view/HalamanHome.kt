@@ -105,3 +105,125 @@ fun HeaderSection() {
     }
 }
 
+@Composable
+fun BodySection(
+    onTanaman: () -> Unit = {},
+    onPekerja: () -> Unit = {},
+    onCatatanPanen: () -> Unit = {},
+    onAktivitasPertanian: () -> Unit = {}
+) {
+    LazyColumn(
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        item {
+            AnimatedManageBox(
+                title = "Tanaman",
+                description = "Kelola Tanaman Anda di sini.",
+                backgroundColor = Color(0xFF6FCF97),
+                iconResource = R.drawable.tanaman,
+                onClick = onTanaman
+            )
+        }
+        item {
+            AnimatedManageBox(
+                title = "Pekerja",
+                description = "Daftar atau kelola pekerja Anda.",
+                backgroundColor = Color(0xFF56CCF2),
+                iconResource = R.drawable.pekerja,
+                onClick = onPekerja
+            )
+        }
+        item {
+            AnimatedManageBox(
+                title = "Catatan Panen",
+                description = "Lihat aktivitas panen Anda di sini.",
+                backgroundColor = Color(0xFFF2C94C),
+                iconResource = R.drawable.panen,
+                onClick = onCatatanPanen
+            )
+        }
+        item {
+            AnimatedManageBox(
+                title = "Aktivitas Pertanian",
+                description = "Pantau aktivitas pertanian Anda.",
+                backgroundColor = Color(0xFFBB6BD9),
+                iconResource = R.drawable.aktivitas,
+                onClick = onAktivitasPertanian
+            )
+        }
+    }
+}
+
+@Composable
+fun AnimatedManageBox(
+    title: String,
+    description: String,
+    backgroundColor: Color,
+    iconResource: Int,
+    onClick: () -> Unit
+) {
+    val scale = remember { Animatable(1f) }
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .graphicsLayer(scaleX = scale.value, scaleY = scale.value)
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onPress = {
+                        scale.animateTo(
+                            0.95f,
+                            animationSpec = tween(durationMillis = 100)
+                        )
+                        tryAwaitRelease()
+                        scale.animateTo(
+                            1f,
+                            animationSpec = tween(durationMillis = 100)
+                        )
+                        onClick()
+                    }
+                )
+            }
+            .shadow(8.dp, RoundedCornerShape(16.dp)),
+        shape = RoundedCornerShape(16.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .background(backgroundColor)
+                .padding(16.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = title,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = description,
+                        fontSize = 14.sp,
+                        color = Color.White.copy(alpha = 0.8f)
+                    )
+                }
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .size(56.dp)
+                        .background(Color.White.copy(alpha = 0.2f), CircleShape)
+                ) {
+                    Image(
+                        painter = painterResource(id = iconResource),
+                        contentDescription = "$title Icon",
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+        }
+    }
+}
