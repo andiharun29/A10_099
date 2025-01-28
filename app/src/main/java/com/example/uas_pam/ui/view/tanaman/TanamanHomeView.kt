@@ -120,3 +120,38 @@ fun HomeScreenTanaman(
 }
 
 
+@Composable
+fun TanamanHomeStatus(
+    tanamanHomeUiState: StateFlow<tanamanHomeUiState>,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Tanaman) -> Unit = {},
+    onDetailClick: (String) -> Unit = {},
+    onEditClick: (String) -> Unit = {}
+){
+    when (val state = tanamanHomeUiState.collectAsState().value){
+        is tanamanHomeUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is tanamanHomeUiState.Success ->
+            if(state.tanaman.isEmpty()){
+                return Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                    Text(text = "Tidak ada data Tanaman")
+                }
+            }else {
+                tnmnLayout(
+                    tanaman = state.tanaman, modifier = modifier.fillMaxWidth(),
+                    onDetailClick =
+                        onDetailClick,
+                    onDeleteClick = {
+                        onDeleteClick(it)
+                    },
+                    onEditClick =
+                        onEditClick
+
+                )
+            }
+        is tanamanHomeUiState.Error -> OnError(retryAction, modifier = Modifier.fillMaxSize())
+    }
+}
+
+
