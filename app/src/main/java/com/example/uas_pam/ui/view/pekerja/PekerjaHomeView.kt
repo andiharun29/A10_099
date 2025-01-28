@@ -65,6 +65,41 @@ import kotlinx.coroutines.flow.StateFlow
 
 
 
+@Composable
+fun PekerjaHomeStatus(
+    pekerjaHomeUiState: StateFlow<pekerjaHomeUiState>,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Pekerja) -> Unit = {},
+    onDetailClick: (String) -> Unit = {},
+    onEditClick: (String) -> Unit ={}
+){
+    when (val state = pekerjaHomeUiState.collectAsState().value){
+        is pekerjaHomeUiState.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+
+        is pekerjaHomeUiState.Success ->
+            if(state.pekerja.isEmpty()){
+                return Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                    Text(text = "Tidak ada data Pekerja")
+                }
+            }else {
+                pkrjLayout(
+                    pekerja = state.pekerja, modifier = modifier.fillMaxWidth(),
+                    onDetailClick =
+                        onDetailClick,
+                    onDeleteClick = {
+                        onDeleteClick(it) },
+                    onEditClick =
+                        onEditClick
+
+                )
+            }
+        is pekerjaHomeUiState.Error -> OnError(
+            retryAction,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
 
 @Composable
 fun OnLoading(modifier: Modifier = Modifier){
