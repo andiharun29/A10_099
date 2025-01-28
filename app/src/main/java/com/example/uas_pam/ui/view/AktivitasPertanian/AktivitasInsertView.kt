@@ -54,7 +54,73 @@ import com.example.uas_pam.ui.viewmodel.Tanaman.InserttanamanUiState
 import com.example.uas_pam.ui.viewmodel.Tanaman.InserttanamanViewModel
 import kotlinx.coroutines.launch
 
+object DestinasiEntryAktivitas : DestinasiNavigasi {
+    override val route = "itemaktivitas"
+    override val titleRes = "Masukkan Data Aktivitas Pertanian"
+}
 
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EntryScreenAktivitas(
+    navigateBack: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: InsertAktivitasViewModel = viewModel(factory = PenyediaViewModel.Factory)
+){
+    val coroutineScope = rememberCoroutineScope()
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold(
+        modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiEntryAktivitas.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ){innerPadding ->
+        EntryBody(
+            insertaktivitasUiState = viewModel.aktivitasuiState,
+            onAktivitasValueChange = viewModel::updateInsertaktivitasUiState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.insertTnmn()
+                    navigateBack()
+                }
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+        )
+    }
+}
+
+@Composable
+fun EntryBody(
+    insertaktivitasUiState: InsertaktivitasUiState,
+    onAktivitasValueChange: (InsertaktivitasUiEvent) -> Unit,
+    onSaveClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(18.dp),
+        modifier = modifier.padding(12.dp)
+    ) {
+        FormInput(
+            insertaktivitasUiEvent = insertaktivitasUiState.insertaktivitasUiEvent,
+            onValueChange = onAktivitasValueChange,
+            modifier = Modifier.fillMaxWidth()
+        )
+        Button(
+            onClick = onSaveClick,
+            shape = MaterialTheme.shapes.small,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Simpan")
+        }
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
