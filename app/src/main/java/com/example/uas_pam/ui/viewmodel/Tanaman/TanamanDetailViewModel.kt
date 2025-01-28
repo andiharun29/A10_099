@@ -32,7 +32,19 @@ class TanamanDetailViewModel (
         getTanamanById()
     }
 
-
+    fun getTanamanById(){
+        viewModelScope.launch {
+            tanamanDetailState = try {
+                val tanaman = tanamanRepository.gettanamanbyid(idtanaman.toInt())
+                TanamanDetailUiState.Success(tanaman)
+            }catch (e: IOException){
+                TanamanDetailUiState.Error
+            }catch (e: HttpException){
+                e.printStackTrace()
+                TanamanDetailUiState.Error
+            }
+        }
+    }
 }
 
 
