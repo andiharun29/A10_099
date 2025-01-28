@@ -11,6 +11,18 @@ import kotlinx.coroutines.launch
 
 
 
+fun InsertpanenUiEvent.topnn(): Catatan_panen = Catatan_panen(
+    id_panen = id_panen,
+    id_tanaman = id_tanaman,
+    tanggal_panen = tanggal_panen,
+    jumlah_panen = jumlah_panen,
+    keterangan =  keterangan
+)
+
+fun Catatan_panen.toUiStatepanen(): InsertpanenUiState = InsertpanenUiState(
+    insertpanenUiEvent = toInsertpanenUiEvent()
+)
+
 fun Catatan_panen.toInsertpanenUiEvent(): InsertpanenUiEvent = InsertpanenUiEvent(
     id_panen = id_panen,
     id_tanaman = id_tanaman,
