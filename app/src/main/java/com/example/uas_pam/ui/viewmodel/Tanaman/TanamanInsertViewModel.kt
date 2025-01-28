@@ -9,7 +9,24 @@ import com.example.uas_pam.data.Repository.TanamanRepository
 import com.example.uas_pam.data.model.Tanaman
 import kotlinx.coroutines.launch
 
+class InserttanamanViewModel(private val tnmn: TanamanRepository): ViewModel() {
+    var tanamanuiState by mutableStateOf(InserttanamanUiState())
+        private set
 
+    fun updateInserttanamanUiState(inserttanamanUiEvent: InserttanamanUiEvent) {
+        tanamanuiState = InserttanamanUiState(inserttanamanUiEvent = inserttanamanUiEvent)
+    }
+
+    fun insertTnmn() {
+        viewModelScope.launch {
+            try {
+                tnmn.inserttanaman(tanamanuiState.inserttanamanUiEvent.totnmn())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
 
 data class InserttanamanUiState(
     val inserttanamanUiEvent: InserttanamanUiEvent = InserttanamanUiEvent(),
