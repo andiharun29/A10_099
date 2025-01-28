@@ -70,6 +70,43 @@ import kotlinx.coroutines.flow.StateFlow
 
 
 @Composable
+fun PanenHomeStatus(
+    panenHomeUiState: StateFlow<panenHomeUiState>,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Catatan_panen) -> Unit = {},
+    onDetailClick: (String) -> Unit = {},
+    onEditClick: (String) -> Unit = {}
+){
+    when (val state = panenHomeUiState.collectAsState().value){
+        is panenHomeUiState.Loading ->OnLoading(modifier = modifier.fillMaxSize())
+
+        is panenHomeUiState.Success ->
+            if(state.catatan_panen.isEmpty()){
+                return Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+                    Text(text = "Tidak ada data Catatan Panen")
+                }
+            }else {
+                pnnLayout(
+                    catatanPanen = state.catatan_panen, modifier = modifier.fillMaxWidth(),
+                    onDetailClick =
+                    onDetailClick,
+                    onDeleteClick = {
+                        onDeleteClick(it)
+                    },
+                    onEditClick =
+                    onEditClick
+
+                )
+            }
+        is panenHomeUiState.Error ->OnError(
+            retryAction,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+@Composable
 fun OnLoading(modifier: Modifier = Modifier){
     Image(
         modifier = modifier.size(200.dp),
