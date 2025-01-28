@@ -209,3 +209,137 @@ fun tnmnLayout(
     }
 }
 
+@Composable
+fun tnmnCard(
+    tanaman: Tanaman,
+    modifier: Modifier = Modifier,
+    onDeleteClick: (Tanaman) -> Unit,
+    onEditClick: () -> Unit,
+    onDetailClick: () -> Unit
+) {
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        DeleteConfirmationDialog(
+            onDeleteConfirm = {
+                showDialog = false
+                onDeleteClick(tanaman)
+            },
+            onDeleteCancel = { showDialog = false }
+        )
+    }
+
+    Card(
+        modifier = modifier
+            .padding(vertical = 4.dp)
+            .graphicsLayer {
+                shadowElevation = 8.dp.toPx()
+                shape = RoundedCornerShape(16.dp)
+                clip = true
+            }
+            .clickable { onDetailClick() }, // Navigasi ke detail ketika card ditekan
+        colors = CardDefaults.cardColors(containerColor = Color.White),
+        elevation = CardDefaults.cardElevation(8.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = tanaman.nama_tanaman,
+                    style = MaterialTheme.typography.titleLarge.copy(
+                        color = Color(0xFF37474F),
+                        fontWeight = FontWeight.Bold
+                    ),
+                )
+                Spacer(Modifier.weight(1f))
+                IconButton(onClick = { showDialog = true }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Hapus",
+                        tint = Color(0xFFEB5757)
+                    )
+                }
+            }
+            Text(
+                text = "Periode Tanam: ${tanaman.periode_tanam}",
+                style = MaterialTheme.typography.bodyLarge.copy(color = Color.Gray),
+            )
+            Text(
+                text = tanaman.deskripsi_tanaman,
+                style = MaterialTheme.typography.bodyLarge.copy(color = Color(0xFF616161)),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
+            )
+            Spacer(modifier = Modifier.size(8.dp)) // Jarak antara elemen
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Button(
+                    onClick = onEditClick,
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF56CCF2)),
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(text = "Edit", color = Color.White)
+                }
+                OutlinedButton(
+                    onClick = { onDetailClick() },
+                    border = BorderStroke(1.dp, Color(0xFF6FCF97)),
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(text = "Detail", color = Color(0xFF6FCF97))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun DeleteConfirmationDialog(
+    onDeleteConfirm: () -> Unit,
+    onDeleteCancel: () -> Unit,
+) {
+    AlertDialog(
+        onDismissRequest = { onDeleteCancel() },
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(bottom = 8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Warning,
+                    contentDescription = null,
+                    tint = Color(0xFFFF6F61),
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = "Hapus Data",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = Color(0xFF37474F)
+                )
+            }
+        },
+        text = {
+            Text(
+                text = "Apakah Anda yakin ingin menghapus data ini?",
+                style = MaterialTheme.typography.bodyLarge.copy(color = Color(0xFF616161))
+            )
+        },
+        confirmButton = {
+            TextButton(onClick = onDeleteConfirm) {
+                Text(text = "Ya", color = Color(0xFFFF6F61))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDeleteCancel) {
+                Text(text = "Batal", color = Color(0xFF1DDBAF))
+            }
+        }
+    )
+}
