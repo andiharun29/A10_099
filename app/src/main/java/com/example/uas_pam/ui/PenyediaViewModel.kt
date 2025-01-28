@@ -50,6 +50,18 @@ object PenyediaViewModel{
             )
         }
 
+        initializer { PanenHomeViewModel(aplikasipertanian().container.catatanpanenRepository) }
+        initializer { PanenInsertViewModel(aplikasipertanian().container.catatanpanenRepository) }
+        initializer { PanenDetailViewModel(
+            createSavedStateHandle(),
+            aplikasipertanian().container.catatanpanenRepository) }
+        initializer {
+            PanenUpdateViewModel(
+                createSavedStateHandle(),
+                aplikasipertanian().container.catatanpanenRepository
+            )
+        }
+
 
     }
 }
