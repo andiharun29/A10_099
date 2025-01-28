@@ -9,7 +9,24 @@ import com.example.uas_pam.data.Repository.CatatanPanenRepository
 import com.example.uas_pam.data.model.Catatan_panen
 import kotlinx.coroutines.launch
 
+class PanenInsertViewModel(private val pnn: CatatanPanenRepository): ViewModel() {
+    var panenuiState by mutableStateOf(InsertpanenUiState())
+        private set
 
+    fun updateInsertpanenUiState(insertpanenUiEvent: InsertpanenUiEvent) {
+        panenuiState = InsertpanenUiState(insertpanenUiEvent = insertpanenUiEvent)
+    }
+
+    fun insertPnn() {
+        viewModelScope.launch {
+            try {
+                pnn.insertcatatanpanen(panenuiState.insertpanenUiEvent.topnn())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+}
 
 data class InsertpanenUiState(
     val insertpanenUiEvent: InsertpanenUiEvent = InsertpanenUiEvent(),
