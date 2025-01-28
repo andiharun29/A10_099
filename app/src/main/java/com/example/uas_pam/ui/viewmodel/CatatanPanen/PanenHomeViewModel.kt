@@ -42,5 +42,16 @@ class PanenHomeViewModel(private val pnn: CatatanPanenRepository): ViewModel(){
             }
         }
     }
-
+    fun deletepnn(id_panen: Int){
+        viewModelScope.launch{
+            try {
+                pnn.deletecatatanpanen(id_panen)
+                getpnn()
+            }catch (e: IOException){
+                _panenUIState.value = panenHomeUiState.Error
+            }catch (e: HttpException){
+                _panenUIState.value = panenHomeUiState.Error
+            }
+        }
+    }
 }
