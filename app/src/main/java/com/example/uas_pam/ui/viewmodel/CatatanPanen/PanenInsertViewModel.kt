@@ -11,6 +11,20 @@ import kotlinx.coroutines.launch
 
 
 
+data class InsertpanenUiState(
+    val insertpanenUiEvent: InsertpanenUiEvent = InsertpanenUiEvent(),
+    val snakbarMessage: String? = null
+)
+
+data class InsertpanenUiEvent(
+    val id_panen: Int = 0,
+    val id_tanaman: Int = 0,
+    val tanggal_panen: String = "",
+    val jumlah_panen: String = "",
+    val keterangan: String = ""
+
+)
+
 fun InsertpanenUiEvent.topnn(): Catatan_panen = Catatan_panen(
     id_panen = id_panen,
     id_tanaman = id_tanaman,
