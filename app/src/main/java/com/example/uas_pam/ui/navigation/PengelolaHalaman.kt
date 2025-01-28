@@ -175,6 +175,71 @@ fun PengelolaHalaman(
             )
         }
 
+        //Catatan Panen
+        composable(
+            route = DestinasiHomePanen.route
+        ){
+            HomeScreenPanen(
+                navigateToItemEntry = {
+                    navController.navigate(DestinasiEntryPanen.route)
+                },
+                navigateBack = {
+                    navController.popBackStack()
+                },
+                onDetailClick = { id_panen ->
+                    navController.navigate("${DestinasiDetailPanen.route}/$id_panen")
+                },
+                onEditClick = { id_panen ->
+                    navController.navigate("${DestinasiUpdatePanen.route}/${id_panen}")
+                }
+            )
+        }
+        composable(
+            route = DestinasiDetailPanen.routeWithArgs,
+            arguments = listOf(navArgument(DestinasiDetailPanen.id_panen) { type = NavType.StringType })
+        ) { backStackEntry ->
+            val idpanen = backStackEntry.arguments?.getString(DestinasiDetailPanen.id_panen)
+            if (idpanen != null) {
+                DetailScreenPanen(
+                    onBackClick = { navController.popBackStack() }
+                )
+            }
+        }
+        composable(
+            route = DestinasiEntryPanen.route
+        ) {
+            EntryScreenPanen(
+                navigateBack = { navController.navigate(DestinasiHomePanen.route){
+                    popUpTo(DestinasiHomePanen.route){
+                        inclusive = true
+                    }
+                }
+                }
+            )
+        }
+        composable(
+            DestinasiUpdatePanen.routesWithArg,
+            arguments = listOf(
+                navArgument(DestinasiUpdatePanen.id_panen) {
+                    type = NavType.IntType
+                }
+            )
+        ){ BackStackEntry ->
+            val id_panen = BackStackEntry.arguments?.getInt(DestinasiUpdatePanen.id_panen)
+            requireNotNull(id_panen)
+            id_panen?.let {
+                UpdatePanenView(
+                    onBack = { navController.popBackStack() },
+                    onNavigate = { navController.navigate(DestinasiHomePanen.route) {
+                        popUpTo(DestinasiHomePanen.route) {
+                            inclusive = true }
+                    }
+                    },
+                    modifier = modifier
+                )
+            }
+        }
+
 
     }
 }
