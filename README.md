@@ -10,7 +10,7 @@
 <img src="https://github.com/user-attachments/assets/40c2d0e1-970d-4c13-abb9-2af559a57567" width="200">
 <img src="https://github.com/user-attachments/assets/6d6c2f4e-fc3f-464f-b095-67200726994a" width="200">
 <img src="https://github.com/user-attachments/assets/2cbd1326-fad8-414c-9d3e-0b754ad57c79" width="200">
-<img src="https://github.com/user-attachments/assets/64b0bfc6-b334-4a9e-a058-50e8b6ad965e" width="200">
+<img src="https://github.com/user-attachments/assets/2b6235cb-5ebc-40e9-86c1-d6185a5b9906" width="200">
 
 ## Halaman Navigasi
 
