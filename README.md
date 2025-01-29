@@ -25,8 +25,19 @@ Halaman Aktivitas Pertanian
 <img src= "https://github.com/user-attachments/assets/720513aa-eee8-428f-bc04-9cbc3986aded" width ="250">
 <img src= "https://github.com/user-attachments/assets/35cc5824-8ffd-4a9c-b6ef-12c65c54ad30" width ="250">
 <img src= "https://github.com/user-attachments/assets/7707d60a-d0e7-4cef-bf6d-9e8c3925bcbe" width ="250">
+<img src= "https://github.com/user-attachments/assets/3cf3dbd6-cbce-47fe-976b-2ba79fff42dc" width ="250">
 <img src= "https://github.com/user-attachments/assets/166654b6-54b6-4c22-9a20-20c7fd4086a9" width ="250">
 <img src= "https://github.com/user-attachments/assets/6c2e8eea-f218-4b7b-87ff-e69ae33b87f8" width ="250">
+<img src= "https://github.com/user-attachments/assets/cf3e703f-5492-4840-8700-5c81cdea184c" width ="250">
 
+Halaman Catatan Panen
+<img src= "https://github.com/user-attachments/assets/a192593c-0fd2-4beb-9cb5-29d78ade78e4" width ="250">
+<img src= "https://github.com/user-attachments/assets/fc874ac8-4b79-455a-812d-8121aa644561" width ="250">
+<img src= "https://github.com/user-attachments/assets/535dda84-0e3e-403e-be41-f4d003e6506d" width ="250">
+<img src= "https://github.com/user-attachments/assets/780e72e7-b130-40cb-baa8-fb3f7d9750c8" width ="250">
+<img src= "https://github.com/user-attachments/assets/15d218c3-1adc-4175-8cca-0e14f0a3c8ff" width ="250">
+<img src= "https://github.com/user-attachments/assets/20389584-b158-4348-a9c5-c9e1daf27ebb" width ="250">
+<img src= "https://github.com/user-attachments/assets/287b1d86-04fb-4cc4-b710-285f82f7556c" width ="250">
+<img src= "https://github.com/user-attachments/assets/d994cf76-e1b9-4d2d-ad85-ad9481b4f1d7" width ="250">
 
 
